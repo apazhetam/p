@@ -138,6 +138,7 @@ function Polaroid({
     }
   }, [index, onExpand])
 
+  const mediaReady = width !== null
   const displayWidth = width ?? DEFAULT_WIDTH_LANDSCAPE
   const bottomPad = Math.max(32, displayWidth * 0.16)
 
@@ -149,9 +150,13 @@ function Polaroid({
       dragMomentum={false}
       dragElastic={0.1}
       whileDrag={{ scale: 1.05, boxShadow: '0 20px 40px rgba(0,0,0,0.2)' }}
-      initial={{ opacity: 0, scale: 0.8, x, y, rotate: rotation }}
-      animate={{ opacity: 1, scale: 1, x, y, rotate: rotation }}
-      transition={{ duration: 0.5, delay: 0.1 + index * 0.08, ease: [0.22, 1, 0.36, 1] }}
+      initial={false}
+      animate={{
+        opacity: mediaReady ? 1 : 0,
+        scale: mediaReady ? 1 : 0.8,
+        x, y, rotate: rotation,
+      }}
+      transition={{ duration: 0.5, delay: mediaReady ? 0.1 + index * 0.08 : 0, ease: [0.22, 1, 0.36, 1] }}
       className="absolute cursor-grab active:cursor-grabbing select-none"
       style={{ zIndex, touchAction: 'none', width: displayWidth + 16 }}
     >
