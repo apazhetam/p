@@ -18,20 +18,13 @@ const SIDE_MARGIN = 70
 const CARD_SIZE = 350 // rough polaroid size to avoid overlap checks
 const CENTER_GAP = 360 // keep the vertical center strip clear for the event card
 
-// Multiple seeded PRNGs with different constants for more variety
-function seededRand(seed: number): number {
-  const x = Math.sin(seed * 127.1 + 311.7) * 43758.5453
-  return x - Math.floor(x)
-}
-
-function seededRand2(seed: number): number {
-  const x = Math.sin(seed * 269.5 + 183.3) * 28461.7231
-  return x - Math.floor(x)
-}
-
-function seededRand3(seed: number): number {
-  const x = Math.sin(seed * 419.2 + 71.9) * 61253.1489
-  return x - Math.floor(x)
+// Hash-based PRNG — produces well-distributed values from any integer seed
+function hash(n: number): number {
+  let h = (n ^ 0xDEADBEEF) | 0
+  h = Math.imul(h ^ (h >>> 16), 0x45d9f3b)
+  h = Math.imul(h ^ (h >>> 13), 0x45d9f3b)
+  h = (h ^ (h >>> 16)) >>> 0
+  return h / 0xFFFFFFFF
 }
 
 function getLayout(count: number): { x: number; y: number; rotation: number }[] {
@@ -50,28 +43,26 @@ function getLayout(count: number): { x: number; y: number; rotation: number }[] 
     let attempts = 0
 
     do {
-      // Use different PRNG per attempt dimension for more scatter
-      const r1 = seededRand(i * 31 + attempts * 97 + 7)
-      const r2 = seededRand2(i * 53 + attempts * 71 + 13)
-      const r3 = seededRand3(i * 17 + attempts * 43 + 29)
+      const seed = i * 1000 + attempts
+      const rx = hash(seed)
+      const ry = hash(seed + 333)
+      const rSide = hash(seed + 777)
 
-      // Pick side based on a mix of index and randomness
-      const side = r3 > 0.5 ? 'left' : 'right'
-      if (side === 'left') {
-        x = SIDE_MARGIN + r1 * Math.max(0, centerL - SIDE_MARGIN - CARD_SIZE)
+      if (rSide > 0.5) {
+        x = SIDE_MARGIN + rx * Math.max(0, centerL - SIDE_MARGIN)
       } else {
-        x = centerR + r1 * Math.max(0, maxX - centerR)
+        x = centerR + rx * Math.max(0, maxX - centerR)
       }
-      y = TOP_MARGIN + r2 * Math.max(0, maxY - TOP_MARGIN)
+      y = TOP_MARGIN + ry * Math.max(0, maxY - TOP_MARGIN)
       attempts++
     } while (
-      attempts < 30 &&
+      attempts < 40 &&
       result.some(
         (p) => Math.abs(p.x - x) < CARD_SIZE * 0.45 && Math.abs(p.y - y) < CARD_SIZE * 0.45
       )
     )
 
-    const rotation = seededRand(i * 113 + 47) * 14 - 7 // -7 to 7 degrees
+    const rotation = hash(i * 7919 + 131) * 14 - 7
 
     result.push({ x, y, rotation })
   }

@@ -1,8 +1,8 @@
 {
   "date": "2026-03-29",
-  "title": "",
-  "city": "",
-  "location": { "lat": 0, "lng": 0 },
+  "title": "post-naacho rest!",
+  "city": "South Brunswick, NJ",
+  "location": { "lat": 40.3838, "lng": -74.5268 },
   "description": "",
   "photos": ["IMG_0924.jpg"],
   "zoom": 13
