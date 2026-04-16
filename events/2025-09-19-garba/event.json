@@ -1,0 +1,10 @@
+{
+  "date": "2025-09-19",
+  "title": "garba!!!",
+  "city": "Edison, NJ",
+  "location": { "lat": 40.5187, "lng": -74.4121 },
+  "description": "",
+  "photos": ["IMG_8989.jpg"],
+  "videos": ["5BAB6346-74A9-41DF-9E02-E63A8A0AF299.mp4", "42F76C38-0DD4-4D3D-AE08-A8CEB6CE352C.mp4", "432DD655-B5F2-4257-9EDD-69968B732425.mp4"],
+  "zoom": 13
+}

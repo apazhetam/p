@@ -1,0 +1,10 @@
+{
+  "date": "2025-09-20",
+  "title": "demon slayer",
+  "city": "New York City, NY",
+  "location": { "lat": 40.7128, "lng": -74.0060 },
+  "description": "COULD NOT WAIT to watch this with you.\nalsoo guess who got the prettiest piercing!",
+  "photos": ["IMG_9002.jpg", "IMG_9006.jpg", "IMG_9008.jpg", "IMG_9020.jpg", "IMG_9025.jpg", "IMG_9030.jpg"],
+  "videos": ["IMG_1667.mp4"],
+  "zoom": 12
+}

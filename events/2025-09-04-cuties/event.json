@@ -1,0 +1,10 @@
+{
+  "date": "2025-09-04",
+  "title": "cuties",
+  "city": "Princeton, NJ",
+  "location": { "lat": 40.3573, "lng": -74.6672 },
+  "description": "",
+  "photos": ["IMG_8839.jpg"],
+  "videos": ["IMG_8841.mp4"],
+  "zoom": 13
+}

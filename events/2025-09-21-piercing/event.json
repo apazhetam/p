@@ -1,0 +1,10 @@
+{
+  "date": "2025-09-21",
+  "title": "good nyc brunch",
+  "city": "New York City, NY",
+  "location": { "lat": 40.7128, "lng": -74.0060 },
+  "description": "",
+  "photos": ["IMG_9049.jpg"],
+  "videos": ["C0A93F70-C33A-407D-A74F-30DDD79A0080.mp4"],
+  "zoom": 12
+}

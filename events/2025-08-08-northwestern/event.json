@@ -1,0 +1,10 @@
+{
+  "date": "2025-08-08",
+  "title": "best sleep i've ever had",
+  "city": "Northwestern University, IL",
+  "location": { "lat": 42.0565, "lng": -87.6753 },
+  "description": "",
+  "photos": ["IMG_8564.jpg", "IMG_8568.jpg", "IMG_8574.jpg"],
+  "videos": ["IMG_8566.mp4", "IMG_8570.mp4"],
+  "zoom": 13
+}
