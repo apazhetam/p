@@ -1,5 +1,7 @@
-import { useMemo } from 'react'
+import { useState, useEffect } from 'react'
 import type { EventData, MediaItem } from '../types'
+
+const BASE = import.meta.env.BASE_URL
 
 interface RawEvent {
   date: string
@@ -12,56 +14,58 @@ interface RawEvent {
   zoom?: number
 }
 
-const eventModules = import.meta.glob<RawEvent>('/events/*/event.json', {
-  eager: true,
-  import: 'default',
-})
-
-const imageModules = import.meta.glob<string>('/events/*/*.{jpg,jpeg,png,webp,JPG,JPEG,PNG,WEBP}', {
-  eager: true,
-  query: '?url',
-  import: 'default',
-})
-
-const videoModules = import.meta.glob<string>('/events/*/*.{mp4,webm,mov,MP4,WEBM,MOV}', {
-  eager: true,
-  query: '?url',
-  import: 'default',
-})
-
 export function useEvents(): EventData[] {
-  return useMemo(() => {
-    const events: EventData[] = []
+  const [events, setEvents] = useState<EventData[]>([])
 
-    for (const [path, raw] of Object.entries(eventModules)) {
-      const folderMatch = path.match(/\/events\/([^/]+)\/event\.json$/)
-      if (!folderMatch) continue
-      const folderName = folderMatch[1]
+  useEffect(() => {
+    async function load() {
+      // Fetch the manifest listing all event folder names
+      const manifestRes = await fetch(`${BASE}events/manifest.json`)
+      const folders: string[] = await manifestRes.json()
 
-      const media: MediaItem[] = []
+      // Fetch all event.json files in parallel
+      const results = await Promise.all(
+        folders.map(async (folderName) => {
+          try {
+            const res = await fetch(`${BASE}events/${folderName}/event.json`)
+            if (!res.ok) return null
+            const raw: RawEvent = await res.json()
 
-      // Resolve photos
-      for (const filename of raw.photos) {
-        const imagePath = `/events/${folderName}/${filename}`
-        const url = imageModules[imagePath]
-        if (url) media.push({ type: 'photo', url })
-      }
+            // Build media URLs (no fetching — just construct the paths)
+            const media: MediaItem[] = []
 
-      // Resolve videos
-      for (const filename of raw.videos ?? []) {
-        const videoPath = `/events/${folderName}/${filename}`
-        const url = videoModules[videoPath]
-        if (url) media.push({ type: 'video', url })
-      }
+            for (const filename of raw.photos) {
+              media.push({
+                type: 'photo',
+                url: `${BASE}events/${folderName}/${filename}`,
+              })
+            }
 
-      events.push({
-        ...raw,
-        media,
-        folderName,
-      })
+            for (const filename of raw.videos ?? []) {
+              media.push({
+                type: 'video',
+                url: `${BASE}events/${folderName}/${filename}`,
+              })
+            }
+
+            return {
+              ...raw,
+              media,
+              folderName,
+            } as EventData
+          } catch {
+            return null
+          }
+        })
+      )
+
+      const loaded = results.filter((e): e is EventData => e !== null)
+      loaded.sort((a, b) => a.date.localeCompare(b.date))
+      setEvents(loaded)
     }
 
-    events.sort((a, b) => a.date.localeCompare(b.date))
-    return events
+    load()
   }, [])
+
+  return events
 }
