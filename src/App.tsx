@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect, useRef } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useEvents } from './hooks/useEvents'
 import { useNavigation } from './hooks/useNavigation'
