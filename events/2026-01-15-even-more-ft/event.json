@@ -1,0 +1,10 @@
+{
+  "date": "2026-01-15",
+  "title": "even more ft",
+  "city": "Princeton, NJ",
+  "location": { "lat": 40.3573, "lng": -74.6672 },
+  "description": "",
+  "photos": [],
+  "videos": ["lp_image(2).mp4"],
+  "zoom": 13
+}

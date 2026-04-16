@@ -1,0 +1,10 @@
+{
+  "date": "2026-02-22",
+  "title": "what's in the box???",
+  "city": "Princeton, NJ",
+  "location": { "lat": 40.3573, "lng": -74.6672 },
+  "description": "",
+  "photos": [],
+  "videos": ["lp_image.mp4", "lp_image(1).mp4"],
+  "zoom": 13
+}

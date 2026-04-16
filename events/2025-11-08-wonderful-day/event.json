@@ -1,0 +1,10 @@
+{
+  "date": "2025-11-08",
+  "title": "a perfect fall day in nyc",
+  "city": "New York City, NY",
+  "location": { "lat": 40.7128, "lng": -74.0060 },
+  "description": "",
+  "photos": ["IMG_9438.jpg", "IMG_9441.jpg", "IMG_9442.jpg", "IMG_9453.jpg", "IMG_9431.JPG"],
+  "videos": ["IMG_9440.mp4"],
+  "zoom": 12
+}

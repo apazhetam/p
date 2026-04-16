@@ -1,0 +1,9 @@
+{
+  "date": "2025-11-05",
+  "title": "this was a perfect day",
+  "city": "Edison, NJ",
+  "location": { "lat": 40.5187, "lng": -74.4121 },
+  "description": "",
+  "photos": ["IMG_9400.jpg", "IMG_9408.jpg", "IMG_9410.jpg", "IMG_9414.jpg", "IMG_9416.jpg"],
+  "zoom": 13
+}

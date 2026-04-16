@@ -1,0 +1,9 @@
+{
+  "date": "2025-10-24",
+  "title": "someone gave me a really cool keychain",
+  "city": "Mountain View, CA",
+  "location": { "lat": 37.3861, "lng": -122.0839 },
+  "description": "and some really sweet gifts like a pretty lamp. you made me feel less lonely when moving across the country by myself",
+  "photos": ["IMG_9310.JPG", "lp_image(2).jpg", "lp_image(3).jpg"],
+  "zoom": 13
+}

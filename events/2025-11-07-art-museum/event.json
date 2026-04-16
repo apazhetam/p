@@ -1,0 +1,9 @@
+{
+  "date": "2025-11-07",
+  "title": "you belong in an art museum",
+  "city": "Princeton, NJ",
+  "location": { "lat": 40.3573, "lng": -74.6672 },
+  "description": "",
+  "photos": ["IMG_9420.jpg", "IMG_1686.jpeg"],
+  "zoom": 13
+}

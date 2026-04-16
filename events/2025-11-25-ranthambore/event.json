@@ -1,0 +1,10 @@
+{
+  "date": "2025-11-25",
+  "title": "an actual princess",
+  "city": "Ranthambore, India",
+  "location": { "lat": 26.0173, "lng": 76.5026 },
+  "description": "",
+  "photos": [],
+  "videos": ["lp_image.mp4", "lp_image(1).mp4"],
+  "zoom": 11
+}
