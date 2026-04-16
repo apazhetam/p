@@ -1,0 +1,10 @@
+{
+  "date": "2025-04-27",
+  "title": "lawnparties",
+  "city": "Princeton, NJ",
+  "location": { "lat": 40.3573, "lng": -74.6672 },
+  "description": "",
+  "photos": ["IMG_2026.JPG", "IMG_6704.jpg", "IMG_6678.jpg", "IMG_6689.jpg"],
+  "videos": ["IMG_7177.mp4"],
+  "zoom": 13
+}

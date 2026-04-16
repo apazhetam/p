@@ -1,0 +1,10 @@
+{
+  "date": "2025-05-23",
+  "title": "hot at hotpot",
+  "city": "Princeton, NJ",
+  "location": { "lat": 40.3573, "lng": -74.6672 },
+  "description": "",
+  "photos": ["IMG_7154.jpg"],
+  "videos": ["36210D1C-08B2-42BA-80B3-A89DEEEC5ACA.mp4"],
+  "zoom": 13
+}

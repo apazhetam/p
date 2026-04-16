@@ -1,0 +1,10 @@
+{
+  "date": "2025-04-19",
+  "title": "six flags",
+  "city": "Jackson Township, NJ",
+  "location": { "lat": 40.1374, "lng": -74.4407 },
+  "description": "",
+  "photos": [],
+  "videos": ["IMG_6478.mp4", "IMG_6493.mp4"],
+  "zoom": 13
+}

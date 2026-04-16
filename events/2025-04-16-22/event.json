@@ -1,0 +1,10 @@
+{
+  "date": "2025-04-16",
+  "title": "22",
+  "city": "Princeton, NJ",
+  "location": { "lat": 40.3573, "lng": -74.6672 },
+  "description": "",
+  "photos": [],
+  "videos": ["IMG_6419.mp4"],
+  "zoom": 13
+}

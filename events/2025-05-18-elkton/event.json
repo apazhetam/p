@@ -1,0 +1,10 @@
+{
+  "date": "2025-05-18",
+  "title": "more mountains",
+  "city": "Elkton, VA",
+  "location": { "lat": 38.4068, "lng": -78.6234 },
+  "description": "",
+  "photos": ["IMG_7020.jpg", "IMG_7027.jpg", "IMG_7035.jpg", "IMG_7071.jpg"],
+  "videos": ["IMG_7037.mp4"],
+  "zoom": 12
+}

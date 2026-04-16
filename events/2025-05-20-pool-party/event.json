@@ -1,0 +1,9 @@
+{
+  "date": "2025-05-20",
+  "title": "pool party",
+  "city": "South Brunswick, NJ",
+  "location": { "lat": 40.3838, "lng": -74.5268 },
+  "description": "",
+  "photos": ["IMG_2503.jpg", "IMG_0615.JPG"],
+  "zoom": 13
+}

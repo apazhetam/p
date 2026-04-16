@@ -1,0 +1,10 @@
+{
+  "date": "2025-05-25",
+  "title": "activities",
+  "city": "Princeton, NJ",
+  "location": { "lat": 40.3573, "lng": -74.6672 },
+  "description": "",
+  "photos": [],
+  "videos": ["IMG_7218.mp4", "IMG_7222.mp4", "IMG_7220.mp4", "IMG_7223.mp4"],
+  "zoom": 13
+}
