@@ -4,7 +4,7 @@
   "city": "Ranthambore, India",
   "location": { "lat": 26.0173, "lng": 76.5026 },
   "description": "",
-  "photos": [],
-  "videos": ["lp_image.mp4", "lp_image(1).mp4"],
+  "photos": ["DSCN0633.jpg", "IMG_3708.jpg"],
+  "videos": ["lp_image.mp4"],
   "zoom": 11
 }

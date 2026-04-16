@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useCallback, useEffect, useRef } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useEvents } from './hooks/useEvents'
 import { useNavigation } from './hooks/useNavigation'
@@ -11,8 +11,21 @@ export default function App() {
   const events = useEvents()
   const { selectedIndex, setSelectedIndex, goNext, goPrev, goTo, hasInteracted } = useNavigation(events.length)
   const [mapReady, setMapReady] = useState(false)
+  const [fontReady, setFontReady] = useState(false)
   const [showTitle, setShowTitle] = useState(true)
   const [appReady, setAppReady] = useState(false)
+
+  // Wait for Caveat font to load before showing title
+  useEffect(() => {
+    document.fonts.ready.then(() => {
+      if (document.fonts.check('1em Caveat')) {
+        setFontReady(true)
+      } else {
+        // Font not cached yet, wait for it specifically
+        document.fonts.load('1em Caveat').then(() => setFontReady(true))
+      }
+    })
+  }, [])
 
   const selectedEvent = selectedIndex >= 0 ? events[selectedIndex] : null
 
@@ -22,7 +35,7 @@ export default function App() {
 
   // Opening sequence: show title, then auto-select first event
   useEffect(() => {
-    if (!mapReady || events.length === 0) return
+    if (!mapReady || !fontReady || events.length === 0) return
 
     // Show title for 2.5 seconds, then select first event
     const titleTimer = setTimeout(() => {
@@ -38,7 +51,7 @@ export default function App() {
       clearTimeout(titleTimer)
       clearTimeout(eventTimer)
     }
-  }, [mapReady, events.length, setSelectedIndex])
+  }, [mapReady, fontReady, events.length, setSelectedIndex])
 
   return (
     <div className="relative w-full h-full bg-gray-50">
@@ -52,7 +65,7 @@ export default function App() {
 
       {/* Opening title */}
       <AnimatePresence>
-        {showTitle && mapReady && (
+        {showTitle && mapReady && fontReady && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}

@@ -68,7 +68,7 @@ export function EventCard({ event, onClose }: Props) {
 
               {/* Description */}
               {event.description && (
-                <p className="text-sm text-gray-600 leading-relaxed">
+                <p className="text-sm text-gray-600 leading-relaxed whitespace-pre-line">
                   {event.description}
                 </p>
               )}

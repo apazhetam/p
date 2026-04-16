@@ -27,7 +27,16 @@ function hash(n: number): number {
   return h / 0xFFFFFFFF
 }
 
-function getLayout(count: number): { x: number; y: number; rotation: number }[] {
+function stringToSeed(str: string): number {
+  let h = 0
+  for (let i = 0; i < str.length; i++) {
+    h = Math.imul(31, h) + str.charCodeAt(i) | 0
+  }
+  return Math.abs(h)
+}
+
+function getLayout(count: number, eventKey: string): { x: number; y: number; rotation: number }[] {
+  const eventSeed = stringToSeed(eventKey)
   const vw = window.innerWidth
   const vh = window.innerHeight
   const maxY = vh - TIMELINE_HEIGHT - CARD_SIZE
@@ -43,7 +52,7 @@ function getLayout(count: number): { x: number; y: number; rotation: number }[] 
     let attempts = 0
 
     do {
-      const seed = i * 1000 + attempts
+      const seed = eventSeed + i * 1000 + attempts
       const rx = hash(seed)
       const ry = hash(seed + 333)
       const rSide = hash(seed + 777)
@@ -62,7 +71,7 @@ function getLayout(count: number): { x: number; y: number; rotation: number }[] 
       )
     )
 
-    const rotation = hash(i * 7919 + 131) * 14 - 7
+    const rotation = hash(eventSeed + i * 7919 + 131) * 14 - 7
 
     result.push({ x, y, rotation })
   }
@@ -346,7 +355,7 @@ function ExpandedView({ item, onClose, sourceRect }: { item: MediaItem; onClose:
 }
 
 export function PhotoGallery({ media, eventKey }: Props) {
-  const layout = useMemo(() => getLayout(media.length), [media.length])
+  const layout = useMemo(() => getLayout(media.length, eventKey), [media.length, eventKey])
   const [zOrder, setZOrder] = useState<number[]>(() => media.map((_, i) => i))
   const [expanded, setExpanded] = useState<ExpandInfo | null>(null)
 
