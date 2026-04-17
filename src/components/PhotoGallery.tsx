@@ -12,11 +12,11 @@ interface ExpandInfo {
   rect: DOMRect
 }
 
+function isMobile() {
+  return window.innerWidth < 768
+}
+
 const TIMELINE_HEIGHT = 110
-const TOP_MARGIN = 50
-const SIDE_MARGIN = 70
-const CARD_SIZE = 350 // rough polaroid size to avoid overlap checks
-const CENTER_GAP = 360 // keep the vertical center strip clear for the event card
 
 // Hash-based PRNG — produces well-distributed values from any integer seed
 function hash(n: number): number {
@@ -37,12 +37,16 @@ function stringToSeed(str: string): number {
 
 function getLayout(count: number, eventKey: string): { x: number; y: number; rotation: number }[] {
   const eventSeed = stringToSeed(eventKey)
+  const mobile = isMobile()
   const vw = window.innerWidth
   const vh = window.innerHeight
-  const maxY = vh - TIMELINE_HEIGHT - CARD_SIZE
-  const maxX = vw - SIDE_MARGIN - CARD_SIZE
-  const centerL = (vw - CENTER_GAP) / 2
-  const centerR = (vw + CENTER_GAP) / 2
+  const sideMargin = mobile ? 10 : 70
+  const topMargin = mobile ? 100 : 50 // space for event card on mobile
+  const cardSize = mobile ? 160 : 350
+  const centerGap = mobile ? 0 : 360
+
+  const maxY = vh - TIMELINE_HEIGHT - cardSize
+  const maxX = vw - sideMargin - cardSize
 
   const result: { x: number; y: number; rotation: number }[] = []
 
@@ -57,17 +61,24 @@ function getLayout(count: number, eventKey: string): { x: number; y: number; rot
       const ry = hash(seed + 333)
       const rSide = hash(seed + 777)
 
-      if (rSide > 0.5) {
-        x = SIDE_MARGIN + rx * Math.max(0, centerL - SIDE_MARGIN)
+      if (centerGap > 0) {
+        const centerL = (vw - centerGap) / 2
+        const centerR = (vw + centerGap) / 2
+        if (rSide > 0.5) {
+          x = sideMargin + rx * Math.max(0, centerL - sideMargin)
+        } else {
+          x = centerR + rx * Math.max(0, maxX - centerR)
+        }
       } else {
-        x = centerR + rx * Math.max(0, maxX - centerR)
+        // Mobile: use full width
+        x = sideMargin + rx * Math.max(0, maxX - sideMargin)
       }
-      y = TOP_MARGIN + ry * Math.max(0, maxY - TOP_MARGIN)
+      y = topMargin + ry * Math.max(0, maxY - topMargin)
       attempts++
     } while (
       attempts < 40 &&
       result.some(
-        (p) => Math.abs(p.x - x) < CARD_SIZE * 0.45 && Math.abs(p.y - y) < CARD_SIZE * 0.45
+        (p) => Math.abs(p.x - x) < cardSize * 0.45 && Math.abs(p.y - y) < cardSize * 0.45
       )
     )
 
@@ -79,8 +90,8 @@ function getLayout(count: number, eventKey: string): { x: number; y: number; rot
   return result
 }
 
-const DEFAULT_WIDTH_LANDSCAPE = 320
-const DEFAULT_WIDTH_PORTRAIT = 200
+function getDefaultWidthLandscape() { return isMobile() ? 160 : 320 }
+function getDefaultWidthPortrait() { return isMobile() ? 110 : 200 }
 const MIN_WIDTH = 100
 const MAX_WIDTH = 500
 
@@ -112,7 +123,7 @@ function Polaroid({
   const onMediaLoad = useCallback((naturalW: number, naturalH: number) => {
     if (width !== null) return
     const portrait = naturalH > naturalW
-    setWidth(portrait ? DEFAULT_WIDTH_PORTRAIT : DEFAULT_WIDTH_LANDSCAPE)
+    setWidth(portrait ? getDefaultWidthPortrait() : getDefaultWidthLandscape())
   }, [width])
 
   const onResizeStart = useCallback(
@@ -120,7 +131,7 @@ function Polaroid({
       e.stopPropagation()
       e.preventDefault()
       onBringToFront(index)
-      startData.current = { mouseX: e.clientX, mouseY: e.clientY, startWidth: width ?? DEFAULT_WIDTH_LANDSCAPE }
+      startData.current = { mouseX: e.clientX, mouseY: e.clientY, startWidth: width ?? getDefaultWidthLandscape() }
 
       const onMove = (ev: PointerEvent) => {
         const dx = ev.clientX - startData.current.mouseX
@@ -148,7 +159,7 @@ function Polaroid({
   }, [index, onExpand])
 
   const mediaReady = width !== null
-  const displayWidth = width ?? DEFAULT_WIDTH_LANDSCAPE
+  const displayWidth = width ?? getDefaultWidthLandscape()
   const bottomPad = Math.max(32, displayWidth * 0.16)
 
   return (

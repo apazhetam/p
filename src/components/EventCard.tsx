@@ -26,7 +26,7 @@ export function EventCard({ event, onClose }: Props) {
             animate={{ opacity: 1, x: 0, scale: 1 }}
             exit={{ opacity: 0, x: -40, scale: 0.95 }}
             transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed top-6 left-1/2 -translate-x-1/2 z-20 w-[320px] rounded-2xl shadow-2xl"
+            className="fixed top-4 left-1/2 -translate-x-1/2 z-20 w-[280px] md:w-[320px] rounded-2xl shadow-2xl"
             style={{
               backgroundColor: 'var(--color-card)',
               border: '1px solid var(--color-card-border)',
